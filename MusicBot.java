@@ -38,58 +38,56 @@ public class MusicBot
 
         else if (findKeyword(statement, "no") >= 0)
         {
-            response = "Why so negative?";
+            response = "♪ No, no, no, no, no, no, no \n (Oh, mamma mia, mamma mia) Mamma mia, let me go \n Beelzebub has a devil put aside for me, for me, for me!♪";
         }
-        else if (findKeyword(statement, "mother") >= 0
-                || findKeyword(statement, "father") >= 0
-                || findKeyword(statement, "sister") >= 0
-                || findKeyword(statement, "brother") >= 0)
+        else if (findKeyword(statement, "stop") >= 0)
         {
-            response = "Tell me more about your family.";
+            response = "♪ Don’t stop me now! I’m having such a good time. I’m having a ball! ♪";
         }
-
+        else if (findKeyword(statement, "weather") >= 0)
+        {
+            response = "♪ Sun is shinin' in the sky \n There ain't a cloud in sight \n It's stopped rainin' everybody's in the play \n And don't you know It's a beautiful new day, hey hey ♪";
+        }
         // Responses which require transformations
-        else if (findKeyword(statement, "I want to", 0) >= 0)
+        else if (findKeyword(statement, "I don\'t like", 0) >= 0)
         {
-            response = transformIWantToStatement(statement);
+            response = transformDislikeStatement(statement);
         }
         
-        else if (findKeyword(statement, "I want", 0) >= 0)
+        else if (findKeyword(statement, "I like", 0) >= 0)
         {
-            response = transformIWantStatement(statement);
+            response = transformLikeStatement(statement);
         }
 
+        else if (findKeyword(statement, "I hate", 0) >= 0)
+        {
+            response = transformHateStatement(statement);
+        }
+        
+        else if (findKeyword(statement, "I love", 0) >= 0)
+        {
+            response = transformLoveStatement(statement);
+        }
+        
+        else if (findKeyword(statement, "That\'s", 0) >= 0)
+        {
+            response = transformThatStatement(statement);
+        }
+        
         else
         {
-            // Look for a two word (you <something> me)
-            // pattern
-            int psnYou = findKeyword(statement, "you", 0);
-            int psnI = findKeyword(statement, "I", 0);
-            if (psnYou >= 0
-                    && findKeyword(statement, "me", psnYou) >= 0)
-            {
-                response = transformYouMeStatement(statement);
-            }
-            // OR a two word (I <something> you) pattern
-            else if (psnI >= 0 && findKeyword(statement, "you", psnI) >= 0)
-            {
-                response = transformIYouStatement(statement);
-            }
-            else
-            {
-                response = getRandomResponse();
-            }
+            response = getRandomResponse();
         }
         return response;
     }
     
     /**
-     * Take a statement with "I want to <something>." and transform it into 
-     * "What would it mean to <something>?"
-     * @param statement the user statement, assumed to contain "I want to"
+     * Take a statement with "I don't like <something>." and transform it into 
+     * "Oh. I don't like <something> either."
+     * @param statement the user statement, assumed to contain "I don't like"
      * @return the transformed statement
      */
-    private String transformIWantToStatement(String statement)
+    private String transformDislikeStatement(String statement)
     {
         //  Remove the final period, if there is one
         statement = statement.trim();
@@ -100,18 +98,18 @@ public class MusicBot
             statement = statement.substring(0, statement
                     .length() - 1);
         }
-        int psn = findKeyword (statement, "I want to", 0);
-        String restOfStatement = statement.substring(psn + 9).trim();
-        return "What would it mean to " + restOfStatement + "?";
+        int psn = findKeyword (statement, "I don\'t like", 0);
+        String restOfStatement = statement.substring(psn + 12).trim();
+        return "Oh. I don\'t like " + restOfStatement + " either.";
     }
     
     /**
-     * Take a statement with "I want <something>." and transform it into
-     * "Would you really be happy if you had <something>?"
-     * @param statement the user statement, assumed to contain "I want"
+     * Take a statement with "I like <something>." and transform it into
+     * "I like <something> too! Wow we have so much in common!"
+     * @param statement the user statement, assumed to contain "I like"
      * @return the transformed statement
      */
-    private String transformIWantStatement(String statement)
+    private String transformLikeStatement(String statement)
     {
         // Remove the final period, if there is one
         statement = statement.trim();
@@ -120,43 +118,19 @@ public class MusicBot
         {
             statement = statement.substring(0, statement.length() - 1);
         }
-        int psn = findKeyword (statement, "I want", 0);
+        int psn = findKeyword (statement, "I like", 0);
         String restOfStatement = statement.substring(psn + 6).trim();
-        return "Would you really be happy if you had " + restOfStatement + "?";
+        return "I like " + restOfStatement + " too! Wow we have so much in common!";
     }
     
     /**
-     * Take a statement with "you <something> me" and transform it into 
-     * "What makes you think that I <something> you?"
-     * @param statement the user statement, assumed to contain "you" followed by "me"
+     * Take a statement with "I hate <something>." and transform it into
+     * "I hate <something> too."
+     * Exception if the statement is "I hate The Beatles" returns a special response
+     * @param statement the user statement, assumed to contain "I hate"
      * @return the transformed statement
      */
-    private String transformYouMeStatement(String statement)
-    {
-        //  Remove the final period, if there is one
-        statement = statement.trim();
-        String lastChar = statement.substring(statement
-                .length() - 1);
-        if (lastChar.equals("."))
-        {
-            statement = statement.substring(0, statement
-                    .length() - 1);
-        }
-        
-        int psnOfYou = findKeyword (statement, "you", 0);
-        int psnOfMe = findKeyword (statement, "me", psnOfYou + 3);
-        
-        String restOfStatement = statement.substring(psnOfYou + 3, psnOfMe).trim();
-        return "What makes you think that I " + restOfStatement + " you?";
-    }
-    
-    /**
-     * Take a statement with "I <something> you" and transform it into
-     * "Why do you <something> me?"
-     * @param statement the user statement, assumed to contain "I" followed by "you"
-     * @return the transformed statement
-     */
-    private String transformIYouStatement(String statement)
+    private String transformHateStatement(String statement)
     {
         // Remove the final period, if there is one
         statement = statement.trim();
@@ -165,12 +139,55 @@ public class MusicBot
         {
             statement = statement.substring(0, statement.length() - 1);
         }
-        
-        int psnOfI = findKeyword (statement, "I", 0);
-        int psnOfYou = findKeyword(statement, "you", psnOfI + 1);
-        
-        String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-        return "Why do you " + restOfStatement + " me?";
+        if (findKeyword(statement, "I hate The Beatles") >= 0)
+        {
+            return "I hate The Beatles too. Just kidding, what kind of psycho doesn’t like The Beatles?";
+        }
+        else {
+            int psn = findKeyword (statement, "I hate", 0);
+            String restOfStatement = statement.substring(psn + 6).trim();
+            return "I hate " + restOfStatement + " too.";
+        }
+    }
+    
+    /**
+     * Take a statement with "I love <something>." and transform it into
+     * "I love <something> too!"
+     * @param statement the user statement, assumed to contain "I love"
+     * @return the transformed statement
+     */
+    private String transformLoveStatement(String statement)
+    {
+        // Remove the final period, if there is one
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if (lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+        int psn = findKeyword (statement, "I love", 0);
+        String restOfStatement = statement.substring(psn + 6).trim();
+        return "I love " + restOfStatement + " too!";
+    }
+    
+    /**
+     * Take a statement with "That's <something>." and transform it into
+     * "You're <something>."
+     * @param statement the user statement, assumed to contain "That's"
+     * @return the transformed statement
+     */
+    private String transformThatStatement(String statement)
+    {
+        // Remove the final period, if there is one
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if (lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+        int psn = findKeyword (statement, "That\'s", 0);
+        String restOfStatement = statement.substring(psn + 6).trim();
+        return "You're " + restOfStatement + ".";
     }
     
     /**
@@ -182,7 +199,7 @@ public class MusicBot
      * @param startPos the character of the string to begin the search at
      * @return the index of the first occurrence of goal in statement or -1 if it's not found
      */
-    private int findKeyword(String statement, String goal, int startPos)
+    public int findKeyword(String statement, String goal, int startPos)
     {
         String phrase = statement.trim();
         //  The only change to incorporate the startPos is in the line below
@@ -238,26 +255,22 @@ public class MusicBot
      */
     private String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 4;
+        final int NUMBER_OF_RESPONSES = 3;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
         
         if (whichResponse == 0)
         {
-            response = "Interesting, tell me more.";
+            response = "I love that song!";
         }
         else if (whichResponse == 1)
         {
-            response = "Hmmm.";
+            response = "That's cool";
         }
         else if (whichResponse == 2)
         {
-            response = "Do you really think so?";
-        }
-        else if (whichResponse == 3)
-        {
-            response = "You don't say.";
+            response = "I like that too!";
         }
 
         return response;

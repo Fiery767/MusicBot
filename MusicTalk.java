@@ -7,27 +7,52 @@
  */
 public class MusicTalk extends MusicBot
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class MusicTalk
-     */
-    public MusicTalk()
+    public String getResponse(String statement)
     {
-        // initialise instance variables
-        x = 0;
+        super.getResponse(statement);
+        String response = "";
+        if (findKeyword(statement, "listening to", 0) >= 0)
+        {
+            response = listeningTo(statement);
+        }
+        return response;
+    }
+    
+    private String listeningTo(String statement)
+    {
+        //  Remove the final period, if there is one
+        statement = statement.trim();
+        String lastChar = statement.substring(statement
+                .length() - 1);
+        if (lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement
+                    .length() - 1);
+        }
+        int psn = findKeyword (statement, "listening to", 0);
+        String restOfStatement = statement.substring(psn + 12).trim();
+        final int NUMBER_OF_RESPONSES = 4;
+        double r = Math.random();
+        int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
+        String songChoice = "";
+        if (whichResponse == 0)
+        {
+            songChoice = "How Was Your Day? by Mellow Fellow and Clairo";
+        }
+        else if (whichResponse == 1)
+        {
+            songChoice = "I Want You Back by the Jackson 5";
+        }
+        else if (whichResponse == 2)
+        {
+            songChoice = "This Love by Maroon 5";
+        }
+        else if (whichResponse == 3)
+        {
+            songChoice = "Treacherous Doctor by Wallows";
+        }
+        return "I'm listening to " + songChoice + "!";
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
+    
 }
