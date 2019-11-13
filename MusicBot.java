@@ -71,6 +71,14 @@ public class MusicBot
             SongReferences reference = new SongReferences();
             System.out.println(reference.getResponse(statement));
         }
+        else if (findKeyword(statement, "do you have", 0) >= 0)
+        {
+            response = transformDoYouHaveStatement(statement);
+        }
+        else if (statement.indexOf("?") >= 0)
+        {
+            response = "Good question. I don't know.";
+        }
         else
         {
             response = getRandomResponse();
@@ -199,6 +207,25 @@ public class MusicBot
         String restOfStatement = statement.substring(psn + 6).trim();
         return "You're " + restOfStatement + ".";
     }
+    /** 
+     * Take a statement with “Do you have <something>?” and transform it into “I’m a robot dude. I can’t have <something>.”
+     * @param statement the user statement, assumed to contain “Do you have”
+     * @return the transformed statement
+     */
+    private String transformDoYouHaveStatement(String statement)
+    {
+        // Remove the final period, if there is one
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if (lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+        int psn = findKeyword (statement, "do you have", 0);
+        String restOfStatement = statement.substring(psn + 11).trim();
+        return "I'm a robot dude. I can't have " + restOfStatement + ".";
+    }
+        
     
     /**
      * Search for one word in phrase.  The search is not case sensitive.
