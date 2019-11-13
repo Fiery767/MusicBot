@@ -1,10 +1,7 @@
 #BlueJ class context
 comment0.target=SongReferences
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ SongReferences\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=
-comment1.target=SongReferences()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ SongReferences\r\n
-comment2.params=y
-comment2.target=int\ sampleMethod(int)
-comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\r\n
-numComments=3
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ SongReferences\ here.\r\n\r\n\ @author\ Ranju\ Krishna,\ Melody\ Wang\r\n\ @version\ 11/12/19\r\n
+comment1.params=statement
+comment1.target=java.lang.String\ getResponse(java.lang.String)
+comment1.text=\r\n\ Holds\ if\ statements\ for\ song\ references\ based\ on\ keyword\ detection\r\n\ @param\ statement\ the\ user\ statement,\ assumed\ to\ contain\ partial\ lyrics\ to\ a\ song\r\n\ @return\ the\ response,\ a\ random\ song\ reference\r\n
+numComments=2

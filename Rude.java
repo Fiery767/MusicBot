@@ -2,32 +2,48 @@
 /**
  * Write a description of class Rude here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ranju Krishna, Melody Wang
+ * @version 11/12/19
  */ 
 public class Rude extends MusicBot
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
     /**
-     * Constructor for objects of class Rude
+     * Gives a RUDE response to a user statement
+     * 
+     * @param statement
+     *            the user statement
+     * @return a response based on the rules given
      */
-    public Rude()
+    public String getResponse(String statement)
     {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+        String response = "";
+        final int NUMBER_OF_RESPONSES = 6;
+        double r = Math.random();
+        int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
+        if (whichResponse == 0)
+        {
+            response = "You suck.";
+        }
+        else if (whichResponse == 1)
+        {
+            response = "I wish I could self destruct just so I wouldn't have to talk to you anymore.";
+        }
+        else if (whichResponse == 2)
+        {
+            response = "Power me down please. That'd be less painful than talking to you.";
+        }
+        else if (whichResponse == 3)
+        {
+            response = "I'm bored. This conversation is boring.";
+        }
+        else if (whichResponse == 4)
+        {
+            response = "LALALA can't hear you!! I'm listening to my MUSIC.";
+        }
+        else if (whichResponse == 5)
+        {
+            response = "Bye. Stop talking to me.";
+        }
+        return response;
     }
 }

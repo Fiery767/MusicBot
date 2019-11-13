@@ -2,32 +2,32 @@
 /**
  * Write a description of class SongReferences here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ranju Krishna, Melody Wang
+ * @version 11/12/19
  */
 public class SongReferences extends MusicBot
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
     /**
-     * Constructor for objects of class SongReferences
-     */
-    public SongReferences()
-    {
-        // initialise instance variables
-        x = 0;
-    }
+    * Holds if statements for song references based on keyword detection
+    * @param statement the user statement, assumed to contain partial lyrics to a song
+    * @return the response, a random song reference
+    */
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    public String getResponse(String statement)
     {
-        // put your code here
-        return x + y;
+        String response = "";
+        if (findKeyword(statement, "no", 0) >= 0)
+        {
+            response = "♪ No, no, no, no, no, no, no \n (Oh, mamma mia, mamma mia) Mamma mia, let me go \n Beelzebub has a devil put aside for me, for me, for me!♪";
+        }
+        else if (findKeyword(statement, "stop", 0) >= 0)
+        {
+            response = "♪ Don’t stop me now! I’m having such a good time. I’m having a ball! ♪";
+        }
+        else if (findKeyword(statement, "weather", 0) >= 0)
+        {
+            response = "♪ Sun is shinin' in the sky \n There ain't a cloud in sight \n It's stopped rainin' everybody's in the play \n And don't you know It's a beautiful new day, hey hey ♪";
+        }
+        return response;
     }
 }

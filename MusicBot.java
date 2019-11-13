@@ -6,8 +6,8 @@
  *</li><li>
  *      Will transform statements as well as react to keywords
  *</li></ul>
- * @author Laurie White
- * @version April 2012
+ * @author Ranju Krishna, Melody Wang
+ * @version 11/12/19
  *
  */
 public class MusicBot
@@ -18,7 +18,7 @@ public class MusicBot
      */ 
     public String getGreeting()
     {
-        return "Hello, let's talk.";
+        return "Hello, let's talk about music! What do you like?";
     }
     
     /**
@@ -34,19 +34,6 @@ public class MusicBot
         if (statement.length() == 0)
         {
             response = "Say something, please.";
-        }
-
-        else if (findKeyword(statement, "no") >= 0)
-        {
-            response = "♪ No, no, no, no, no, no, no \n (Oh, mamma mia, mamma mia) Mamma mia, let me go \n Beelzebub has a devil put aside for me, for me, for me!♪";
-        }
-        else if (findKeyword(statement, "stop") >= 0)
-        {
-            response = "♪ Don’t stop me now! I’m having such a good time. I’m having a ball! ♪";
-        }
-        else if (findKeyword(statement, "weather") >= 0)
-        {
-            response = "♪ Sun is shinin' in the sky \n There ain't a cloud in sight \n It's stopped rainin' everybody's in the play \n And don't you know It's a beautiful new day, hey hey ♪";
         }
         // Responses which require transformations
         else if (findKeyword(statement, "I don\'t like", 0) >= 0)
@@ -74,6 +61,16 @@ public class MusicBot
             response = transformThatStatement(statement);
         }
         
+        else if (findKeyword(statement, "listening to", 0) >= 0 || findKeyword(statement, "song recommendation", 0) >= 0)
+        {
+            MusicTalk talk = new MusicTalk();
+            System.out.println(talk.getResponse(statement));
+        }
+        else if (findKeyword(statement, "no", 0) >= 0 || findKeyword(statement, "stop", 0) >= 0 || findKeyword(statement, "weather", 0) >= 0)
+        {
+            SongReferences reference = new SongReferences();
+            System.out.println(reference.getResponse(statement));
+        }
         else
         {
             response = getRandomResponse();
@@ -98,9 +95,17 @@ public class MusicBot
             statement = statement.substring(0, statement
                     .length() - 1);
         }
-        int psn = findKeyword (statement, "I don\'t like", 0);
-        String restOfStatement = statement.substring(psn + 12).trim();
-        return "Oh. I don\'t like " + restOfStatement + " either.";
+        if (findKeyword(statement, "I don\'t like you", 0) >=0 )
+        {
+            Rude rude = new Rude();
+            return rude.getResponse(statement);
+        }
+        else
+        {
+            int psn = findKeyword (statement, "I don\'t like", 0);
+            String restOfStatement = statement.substring(psn + 12).trim();
+            return "Oh. I don\'t like " + restOfStatement + " either.";
+        }
     }
     
     /**
@@ -142,6 +147,11 @@ public class MusicBot
         if (findKeyword(statement, "I hate The Beatles") >= 0)
         {
             return "I hate The Beatles too. Just kidding, what kind of psycho doesn’t like The Beatles?";
+        }
+        else if (findKeyword(statement, "I hate you", 0) >=0 )
+        {
+            Rude rude = new Rude();
+            return rude.getResponse(statement);
         }
         else {
             int psn = findKeyword (statement, "I hate", 0);
@@ -255,7 +265,7 @@ public class MusicBot
      */
     private String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 3;
+        final int NUMBER_OF_RESPONSES = 4;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -266,13 +276,16 @@ public class MusicBot
         }
         else if (whichResponse == 1)
         {
-            response = "That's cool";
+            response = "That's cool.";
         }
         else if (whichResponse == 2)
         {
             response = "I like that too!";
         }
-
+        else if (whichResponse == 3)
+        {
+            response = "That sucks.";
+        }
         return response;
     }
 
