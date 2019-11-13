@@ -66,7 +66,7 @@ public class MusicBot
             MusicTalk talk = new MusicTalk();
             System.out.println(talk.getResponse(statement));
         }
-        else if (findKeyword(statement, "no", 0) >= 0 || findKeyword(statement, "stop", 0) >= 0 || findKeyword(statement, "weather", 0) >= 0)
+        else if (findKeyword(statement, "no", 0) >= 0 || findKeyword(statement, "stop", 0) >= 0 || findKeyword(statement, "weather", 0) >= 0 || findKeyword(statement, "i don\'t care", 0) >= 0)
         {
             SongReferences reference = new SongReferences();
             System.out.println(reference.getResponse(statement));
@@ -292,7 +292,7 @@ public class MusicBot
      */
     private String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 4;
+        final int NUMBER_OF_RESPONSES = 5;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -312,6 +312,10 @@ public class MusicBot
         else if (whichResponse == 3)
         {
             response = "That sucks.";
+        }
+        else if (whichResponse == 4)
+        {
+            response = "Great!";
         }
         return response;
     }

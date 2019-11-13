@@ -28,6 +28,11 @@ public class SongReferences extends MusicBot
         {
             response = "♪ Sun is shinin' in the sky \n There ain't a cloud in sight \n It's stopped rainin' everybody's in the play \n And don't you know It's a beautiful new day, hey hey ♪";
         }
+        else if (findKeyword(statement, "i don't care", 0) >= 0)
+        {
+            response = "♪ I don’t care! I love it! ♪";
+        }
+        response += "\n That's a good song! Do you like it?";
         return response;
     }
 }
